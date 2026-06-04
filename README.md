@@ -30,8 +30,8 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
 
 - Install this module, restart your phone, wait 20 seconds before the final optimizations are applied, and voila, you can have fun with your device
 - For lmkd, the algorithms below have these compression rates:
-  - lz4, lzo, lz4kd, lz4k: 3x compression ratio
-  - Lz4hc, lzo-rle, deflate: 4x compression ratio
+  - lz4, lzo, lz4kd, lz4k, lzo-rle: 3x compression ratio
+  - Lz4hc, deflate: 4x compression ratio
   - Zstd, Zstdn: 5x compression ratio
   - Other algorithms: 2x compression ratio
 - Other LMKs are not compatible, only lmkd is compatible
