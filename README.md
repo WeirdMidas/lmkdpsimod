@@ -38,7 +38,6 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
   - Note: those 3/2 etc., the first is mglru and the second is lru (becoming MGLRU/LRU), just so you already know which ones they are for each swapping algorithm
 - Other LMKs are not compatible, only lmkd is compatible
 - For devices running Android 14 and with 4GB of RAM or less, the "psi + minfree + new strategy" model is used, while devices with 6GB of RAM OR running Android 15+ use the pure lmkd psi model
-- Devices with 2GB of RAM or less are GO devices, 3GB-4GB of RAM are low-end, 6GB-8GB is mid-tier, and 12GB or more is high-performance
 
 ## FAQ
 
