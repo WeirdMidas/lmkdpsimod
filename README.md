@@ -1,6 +1,6 @@
 # lmkd psi mod(ified)
 
-**A module that optimizes how Android manages background apps (lmkd)**
+**A module that optimizes how Android manages background apps (lmkd, psi)**
 
 ## Overview
 
@@ -8,14 +8,15 @@ An extension of the SkyScene Add-on, where it achieves the effect of improve how
 
 If you want an optimization that improves the kernel's memory management behavior, check out the [SkyScene Add-on](https://github.com/WeirdMidas/SkySceneAddon), it specifically handles this aspect, such as swapping, reclaim, and others
 
-It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid/LMKD-PSI-Activator) that optimizes the LMKD PSI part more efficiently and better for Android multitasking. However, it became an original project due to the stark difference in optimization between the two modules
+It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid/LMKD-PSI-Activator) that optimizes the lmkd psi part more efficiently and better for Android multitasking. However, it became an original project due to the stark difference in optimization between the two modules
 
 ### Features
 
 - **📂 Pure optimization, no placebo** - Pure memory management optimization module, not containing other placebo and supporting all mainstream platforms like Qualcomm, MediaTek, and many other platforms
-- **🧣 Align with Google's behavior and standards** - Follow Google's guidelines and standards, allowing older devices to benefit from a modern LMKD PSI in an older environment, depending on the available parameters
-- **🦺 Activate and use PSI, the modern mechanism for managing background processes** - Utilize the modern mechanism for lmkd, PSI (pressure stall information), allowing devices with compatible kernels to use this kill method instead of the standard minfree
-- **❤️‍🩹 Reduce cache pressure to avoid false positives** - Do not look for solutions that free up resources immediately, as lmkd psi seeks efficient use, not availability
+- **🧣 Align with Google's behavior and standards** - Follow Google's guidelines and standards, allowing older devices to benefit from a modern lmkd psi in an older environment, depending on the available parameters
+- **🦺 Activate and use PSI, the modern mechanism for managing background processes** - Utilize lmkd's modern background process killing mechanism, psi. However, depending on the Android version, assistance from traditional minfree may be required, allowing both psi and minfree to work in harmony on older devices
+- **🗾 Tune for Go devices and for Non-Go devices** - Configure the psi for Go devices, allowing lmkd to respect the limitations of each device, favoring multitasking as much as possible on each individual SOC
+- **🔄 Improve lmkd psi behavior according to your swapping algorithm** - Configure the psi based on the swapping algorithm used, allowing lmkd to accurately identify the compression rate level, thrashing detection, and other factors
 - **📊 Safe, efficient, and tested multiple times** -  SELinux can still be enabled
 
 ## Requirement
@@ -30,12 +31,13 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
 
 - Install this module, restart your phone, wait 20 seconds before the final optimizations are applied, and voila, you can have fun with your device
 - For lmkd, the algorithms below have these compression rates:
-  - lz4, lzo, lz4kd, lz4k, lzo-rle: 3x compression ratio
-  - Lz4hc, deflate: 4x compression ratio
-  - Zstd, Zstdn: 5x compression ratio
+  - lz4, lzo, lz4kd, lz4k, lzo-rle: 3x/2x compression ratio
+  - Lz4hc, deflate: 4x/3x compression ratio
+  - Zstd, Zstdn: 5x/4x compression ratio
   - Other algorithms: 2x compression ratio
+  - Note: those 3/2 etc., the first is mglru and the second is lru (becoming MGLRU/LRU), just so you already know which ones they are for each swapping algorithm
 - Other LMKs are not compatible, only lmkd is compatible
-- On Android devices running version 14 or lower, the "psi + minfree + new strategy" model is used, while on Android devices running version 15 or higher, the "pure psi" model is used
+- For devices running Android 14 and with 4GB of RAM or less, the "psi + minfree + new strategy" model is used, while devices with 6GB of RAM OR running Android 15+ use the pure lmkd psi model
 - Devices with 2GB of RAM or less are GO devices, 3GB-4GB of RAM are low-end, 6GB-8GB is mid-tier, and 12GB or more is high-performance
 
 ## FAQ
