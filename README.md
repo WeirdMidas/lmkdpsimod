@@ -13,10 +13,10 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
 ### Features
 
 - **📂 Pure optimization, no placebo** - Pure memory management optimization module, not containing other placebo and supporting all mainstream platforms like Qualcomm, MediaTek, and many other platforms
-- **🧣 Align with Google's behavior and standards** - Follow Google's guidelines and standards, allowing older devices to benefit from a modern lmkd psi in an older environment, depending on the available parameters
-- **🦺 Activate and use PSI, the modern mechanism for managing background processes** - Utilize lmkd's modern background process killing mechanism, psi. However, depending on the Android version, assistance from traditional minfree may be required, allowing both psi and minfree to work in harmony on older devices
-- **🗾 Tune for Go devices and for Non-Go devices** - Configure the psi for Go devices, allowing lmkd to respect the limitations of each device, favoring multitasking as much as possible on each individual SOC
-- **🔄 Improve lmkd psi behavior according to your swapping algorithm** - Configure the psi based on the swapping algorithm used, allowing lmkd to accurately identify the compression rate level, thrashing detection, and other factors
+- **🧣 Align with Google's behavior and standards** - Follow the lmkd guidelines and standards based on AOSP/Google, while manually tuning some parameters, making lmkd more accurate and efficient based on the upstream
+- **🦺 Activate and use PSI, the modern mechanism for managing background processes** - Activate and utilize the lmkd background process kill mechanism, psi (pressure stall information). This allows lmkd to be dynamic most of the time, while maintaining minfree assistance on low-memory devices
+- **🗾 Tune for Go devices and for Non-Go devices** - Tune the behavior of lmkd for both Go and regular devices, ensuring that each device's memory capabilities are respected
+- **🔄 Improve lmkd behavior based on swap and swapping algorithm** - Configure the psi thresholds relative to swap based on the swapping algorithm used, allowing lmkd to be more accurate regarding the memory reclaim capacity of the LRU or MGLRU
 - **📊 Safe, efficient, and tested multiple times** -  SELinux can still be enabled
 
 ## Requirement
@@ -31,13 +31,14 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
 
 - Install this module, restart your phone, wait 20 seconds before the final optimizations are applied, and voila, you can have fun with your device
 - For lmkd, the algorithms below have these compression rates:
-  - lz4, lzo, lz4kd, lz4k, lzo-rle: 3x/2x compression ratio
-  - Lz4hc, deflate: 4x/3x compression ratio
-  - Zstd, Zstdn: 5x/4x compression ratio
-  - Other algorithms: 2x compression ratio
-  - Note: those 3/2 etc., the first is mglru and the second is lru (becoming MGLRU/LRU), just so you already know which ones they are for each swapping algorithm
+  - lz4, lzo, lz4kd, lz4k, lzo-rle: Android 15 algorithms have a compression of 2x/3x, while Android 16 and later versions have a compression of 2.8x/3.1x
+  - Lz4hc, deflate: Android 15 algorithms have a compression of 3x/4x, while Android 16 and later versions have a compression of 3.1x/4.2x
+  - Zstd, Zstdn: Android 15 algorithms have a compression of 4x/5x, while Android 16 and later versions have a compression of 4.2x/5.4x
+  - Other algorithms: Android 15 algorithms have 2x compression, while Android 16 and later versions have 2.8x compression
+    - Note: the first is lru and the second is mglru (becoming LRU/MGLRU), just so you already know which ones they are for each swapping algorithm
+  - On Android 16 and later, devices with 6GB of RAM or less do NOT have the relaxation in the free ZRAM/Swap check. However, devices with 8GB or more do have this relaxation, allowing them to fully utilize their ZRAM/Swap
 - Other LMKs are not compatible, only lmkd is compatible
-- For devices running Android 14 (or lower) and with 4GB of RAM (or less), the "psi + minfree + new strategy" model is used, while devices with 6GB of RAM OR running Android 15+ use the pure lmkd psi model
+- For Android 14 devices with 4GB of RAM (or less), the psi + minfree + new strategy model is used; for devices with 6GB of RAM (or more) or Android 15 and higher (regardless of RAM threshold), the pure psi model is used
 
 ## FAQ
 
