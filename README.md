@@ -15,6 +15,7 @@ It was intended to be a fork of [LMKD-PSI-Activator](https://github.com/lululoid
 - **📂 Pure optimization, no placebo** - Pure memory management optimization module, not containing other placebo and supporting all mainstream platforms like Qualcomm, MediaTek, and many other platforms
 - **🧣 Align with Google's behavior and standards** - Follow the lmkd guidelines and standards based on AOSP/Google, while manually tuning some parameters, making lmkd more accurate and efficient based on the upstream
 - **🦺 Activate and use PSI, the modern mechanism for managing background processes** - Activate and utilize the lmkd background process kill mechanism, psi (pressure stall information). This allows lmkd to be dynamic most of the time, while maintaining minfree assistance on low-memory devices
+- **🥼 Clean up inefficient ROM settings** - In certain lmkd properties, a cleanup is performed to prevent the ROM or other modules via device_config from modifying our settings, allowing us to overwrite harmful changes
 - **🗾 Tune for Go devices and for Non-Go devices** - Tune the behavior of lmkd for both Go and regular devices, ensuring that each device's memory capabilities are respected
 - **🔄 Improve lmkd behavior based on swap and swapping algorithm** - Configure the psi thresholds relative to swap based on the swapping algorithm used, allowing lmkd to be more accurate regarding the memory reclaim capacity of the LRU or MGLRU
 - **📊 Safe, efficient, and tested multiple times** -  SELinux can still be enabled
